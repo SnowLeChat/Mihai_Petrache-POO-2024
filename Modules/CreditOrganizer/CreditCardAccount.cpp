@@ -4,8 +4,6 @@
 
 using namespace System;
 
-int CreditCardAccount::numberOfAccounts = 0;
-
 void CreditCardAccount::SetCreditLimit(double amount) {
 	creditLimit = amount;
 }
