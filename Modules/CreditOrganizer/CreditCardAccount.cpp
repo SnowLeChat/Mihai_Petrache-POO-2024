@@ -4,6 +4,8 @@
 
 using namespace System;
 
+int CreditCardAccount::numberOfAccounts = 0;
+
 void CreditCardAccount::SetCreditLimit(double amount) {
 	creditLimit = amount;
 }
@@ -27,6 +29,10 @@ void CreditCardAccount::PrintStatement() {
 long CreditCardAccount::GetAccountNumber() {
 	return accountNumber;
 }
+int CreditCardAccount::GetNumberOfAccounts() {
+	return numberOfAccounts;
+}
+
 CreditCardAccount::CreditCardAccount(long number, double limit){
 	accountNumber = number;
 	creditLimit = limit;
