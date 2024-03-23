@@ -25,7 +25,7 @@ void CreditCardAccount::PrintStatement() {
 	Console::WriteLine(currentBalance);
 }
 long CreditCardAccount::GetAccountNumber() {
-	return GetAccountNumber;
+	return accountNumber;
 }
 CreditCardAccount::CreditCardAccount(long number, double limit) {
 	accountNumber = number;
