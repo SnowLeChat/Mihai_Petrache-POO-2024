@@ -22,7 +22,7 @@ void CreditCardAccount::MakeRepayment(double amount) {
 }
 void CreditCardAccount::PrintStatement() {
 	Console::Write("Current balance: ");
-	Console::WriteLine(currentBalanace);
+	Console::WriteLine(currentBalance);
 }
 long CreditCardAccount::GetAccountNumber() {
 	return GetAccountNumber;
