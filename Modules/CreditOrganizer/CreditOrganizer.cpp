@@ -4,13 +4,14 @@
 using namespace System;
 
 int main(array<System::String^>^ args) {
-	CreditCardAccount^ myAccount;
-	myAccount = gcnew CreditCardAccount;
-	myAccount->SetCreditLimit(1000);
-	myAccount->MakePurchase(1000);
-	myAccount->MakeRepayment(700);
-	myAccount->PrintStatement();
-	long num = myAccount->GetAccountNumber();
-	Console::Write("Account Number: ");
-	Console::WriteLine(num);
+	Console::WriteLine("Creating first object");
+	CreditCardAccount^ account1;
+	account1 = gcnew CreditCardAccount(12345, 2000);
+	account1->MakePurchase(300);
+	account1->PrintStatement();
+	Console::WriteLine("\nCreating second object");
+	CreditCardAccount^ account2;
+	account2 = gcnew CreditCardAccount(67890, 5000);
+	account2->MakePurchase(750);
+	account2->PrintStatement();
 }

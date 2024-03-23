@@ -1,6 +1,6 @@
 #pragma once
 
-ref class CreditCardAccount{
+ref class CreditCardAccount {
 public:
 	void SetCreditLimit(double amount);
 	bool MakePurchase(double amount);
@@ -8,6 +8,7 @@ public:
 	void PrintStatement();
 	long GetAccountNumber();
 private:
+	static int numberOfAccounts = 0;
 	long accountNumber;
 	double currentBalance;
 	double creditLimit;

@@ -11,12 +11,12 @@ bool CreditCardAccount::MakePurchase(double amount) {
 	if (currentBalance + amount > creditLimit) {
 		return false;
 	}
-	else {
+	else 
+	{
 		currentBalance += amount;
 		return true;
 	}
 }
-
 void CreditCardAccount::MakeRepayment(double amount) {
 	currentBalance -= amount;
 }
@@ -27,8 +27,11 @@ void CreditCardAccount::PrintStatement() {
 long CreditCardAccount::GetAccountNumber() {
 	return accountNumber;
 }
-CreditCardAccount::CreditCardAccount(long number, double limit) {
+CreditCardAccount::CreditCardAccount(long number, double limit){
 	accountNumber = number;
 	creditLimit = limit;
 	currentBalance = 0.0;
+	numberOfAccounts++;
+	Console::Write("This is account number ");
+	Console::WriteLine(numberOfAccounts);
 }
