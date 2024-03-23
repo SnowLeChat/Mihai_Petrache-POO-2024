@@ -3,8 +3,7 @@
 
 using namespace System;
 
-ref class CreditCardAccount
-{
+ref class CreditCardAccount {
 public:
 	CreditCardAccount(long number, double limit);
 	CreditCardAccount();

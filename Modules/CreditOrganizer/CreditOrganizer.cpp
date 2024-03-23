@@ -3,8 +3,7 @@
 
 using namespace System;
 
-int main()
-{
+int main() {
 	Console::WriteLine("Creating an account object");
 	CreditCardAccount^ account1;
 

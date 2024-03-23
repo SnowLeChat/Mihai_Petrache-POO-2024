@@ -1,7 +1,6 @@
 #include "pch.h"
 
-ref class LoyalityScheme
-{
+ref class LoyalityScheme {
 public:
 	LoyalityScheme();
 	void EarnPointsOnAmount(double amountSpent);
