@@ -2,12 +2,18 @@
 
 using namespace System;
 
-ref class BankAccount {
+ref class BankAccount abstract {
 public:
-	BankAccount(String^ holder);
+	BankAccount(String ^holder);
 	void Credit(double amount);
-	void Debit(double amount);
+	bool Debit(double amount);
 	double GetBalance();
+
+	// Derived classes can override this function
+	virtual String^ ToString() override;
+	// Derived classes must override this function
+	// You can use '=0' instea of 'abstract'
+	virtual bool CanDebit(double amount) abstract;
 private:
 	String^ accountHolder;
 	double balance;

@@ -11,3 +11,7 @@ void SavingsAccount::SetInterestRate(double rate) {
 double SavingsAccount::GetInterestRate() {
 	return interestRate;
 }
+
+bool SavingsAccount::CanDebit(double amount) {
+	return (amount <= GetBalance() / 10);
+}
