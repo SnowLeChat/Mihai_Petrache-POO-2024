@@ -17,4 +17,6 @@ public:
 private:
 	String^ accountHolder;
 	double balance;
+protected:
+	String^ RoutingInstructions(double amount);
 };

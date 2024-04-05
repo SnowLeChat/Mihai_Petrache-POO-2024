@@ -21,5 +21,6 @@ String^ CurrentAccount::ToString() {
 }
 
 bool CurrentAccount::CanDebit(double amount) {
+	String^ details = RoutingInstructions(amount);
 	return (amount <= GetBalance() + overdraftLimit);
 }

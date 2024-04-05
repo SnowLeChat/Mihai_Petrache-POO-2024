@@ -29,3 +29,7 @@ String ^BankAccount::ToString() {
 	result = String::Concat(result, balance.ToString());
 	return result;
 }
+
+String^ BankAccount::RoutingInstructions(double amount) {
+	return "Some string...";
+}
