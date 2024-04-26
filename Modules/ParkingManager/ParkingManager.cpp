@@ -3,24 +3,30 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
 
+#pragma once
+
+// This will hold the details for the vehicles stored
 class Vehicle
 {
 private:
     std::string brand;
     std::string color;
     std::string model;
+    std::string timeStamp;
 
 public:
-    // Constructor
+    // Constructor that inits the attributes of the vehicles
     Vehicle(std::string b, std::string c, std::string m)
     {
         brand = b;
         color = c;
         model = m;
+        timeStamp = getTimeStamp();
     }
 
-    // Getters
+    // Getters used to input data for the vehicle attributes from the user
     std::string getBrand()
     {
         return brand;
@@ -35,8 +41,19 @@ public:
     {
         return model;
     }
+
+    std::string getTimeStamp()
+    {
+        std::time_t now = std::time(nullptr);
+        std::tm timeInfo;
+        localtime_s(&timeInfo, &now);
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%H:%M %d/%m/%Y", &timeInfo);
+        return std::string(buffer);
+    }
 };
 
+// This will hold the details for the available spaces inside the paking lots
 class ParkingStorage
 {
 private:
@@ -46,7 +63,7 @@ private:
     std::vector<Vehicle*> parkedVehicles;
 
 public:
-    // Constructor
+    // Constructor that inits the attributes of the parking storages
     ParkingStorage(std::string loc, int cap)
     {
         location = loc;
