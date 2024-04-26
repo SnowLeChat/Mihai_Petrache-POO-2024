@@ -1,5 +1,4 @@
 #include "pch.h"
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,7 +6,6 @@
 
 #pragma once
 
-// This will hold the details for the vehicles stored
 class Vehicle
 {
 private:
@@ -17,7 +15,7 @@ private:
     std::string timeStamp;
 
 public:
-    // Constructor that inits the attributes of the vehicles
+    // Constructor
     Vehicle(std::string b, std::string c, std::string m)
     {
         brand = b;
@@ -26,7 +24,7 @@ public:
         timeStamp = getTimeStamp();
     }
 
-    // Getters used to input data for the vehicle attributes from the user
+    // Getters
     std::string getBrand()
     {
         return brand;
@@ -53,7 +51,6 @@ public:
     }
 };
 
-// This will hold the details for the available spaces inside the paking lots
 class ParkingStorage
 {
 private:
@@ -63,7 +60,7 @@ private:
     std::vector<Vehicle*> parkedVehicles;
 
 public:
-    // Constructor that inits the attributes of the parking storages
+    // Constructor
     ParkingStorage(std::string loc, int cap)
     {
         location = loc;
@@ -112,17 +109,29 @@ public:
             std::cout << "Enter the index number of the vehicle to remove: ";
             std::cin >> choice;
 
-            if (choice >= 1 && choice <= parkedVehicles.size())
+            try
             {
-                delete parkedVehicles[choice - 1];
-                parkedVehicles.erase(parkedVehicles.begin() + choice - 1);
-                occupiedSpaces--;
-                std::cout << "Vehicle removed successfully.\n";
-                displayStatus();
+                if (std::cin.fail())
+                {
+                    throw std::runtime_error("Invalid input. Please enter a valid index number.");
+                }
+
+                if (choice >= 1 && choice <= parkedVehicles.size())
+                {
+                    delete parkedVehicles[choice - 1];
+                    parkedVehicles.erase(parkedVehicles.begin() + choice - 1);
+                    occupiedSpaces--;
+                    std::cout << "Vehicle removed successfully.\n";
+                    displayStatus();
+                }
+                else
+                {
+                    throw std::runtime_error("Invalid choice. Cannot remove vehicle.");
+                }
             }
-            else
+            catch (const std::exception& e)
             {
-                std::cout << "Invalid choice. Cannot remove vehicle.\n";
+                std::cout << "Error: " << e.what() << std::endl;
             }
         }
         else
@@ -144,7 +153,7 @@ public:
             std::cout << "Parked Vehicles:" << std::endl;
             for (int i = 0; i < parkedVehicles.size(); i++)
             {
-                std::cout << i + 1 << ". " << parkedVehicles[i]->getBrand() << " " << parkedVehicles[i]->getModel() << std::endl;
+                std::cout << i + 1 << ". " << parkedVehicles[i]->getBrand() << " " << parkedVehicles[i]->getModel() << " - " << parkedVehicles[i]->getTimeStamp() << std::endl;
             }
         }
     }
@@ -167,51 +176,69 @@ int main()
         std::cout << "Do you want to add or remove a vehicle? (A/R): ";
         std::cin >> addOrRemoveChoice;
 
-        if (addOrRemoveChoice == 'A' || addOrRemoveChoice == 'a')
+        try
         {
-            // Prompt user for parking choice and vehicle details
-            std::cout << "Choose a parking lot (1, 2, or 3): ";
-            std::cin >> choice;
-
-            std::cout << "Enter vehicle brand: ";
-            std::cin >> brand;
-
-            std::cout << "Enter vehicle color: ";
-            std::cin >> color;
-
-            std::cout << "Enter vehicle model: ";
-            std::cin >> model;
-
-            // Park the vehicle in the chosen parking lot
-            switch (choice)
+            if (std::cin.fail())
             {
-            case 1:
-                parking1.parkVehicle(brand, color, model);
-                break;
-            case 2:
-                parking2.parkVehicle(brand, color, model);
-                break;
-            case 3:
-                parking3.parkVehicle(brand, color, model);
-                break;
-            default:
-                std::cout << "Invalid choice. Cannot park vehicle.\n";
-                break;
+                throw std::runtime_error("Invalid input. Please enter 'A' or 'R'.");
+            }
+
+            if (addOrRemoveChoice == 'A' || addOrRemoveChoice == 'a')
+            {
+                // Prompt user for parking choice and vehicle details
+                std::cout << "Choose a parking lot (1, 2, or 3): ";
+                std::cin >> choice;
+
+                std::cout << "Enter vehicle brand: ";
+                std::cin >> brand;
+
+                std::cout << "Enter vehicle color: ";
+                std::cin >> color;
+
+                std::cout << "Enter vehicle model: ";
+                std::cin >> model;
+
+                // Park the vehicle in the chosen parking lot
+                switch (choice)
+                {
+                case 1:
+                    parking1.parkVehicle(brand, color, model);
+                    break;
+                case 2:
+                    parking2.parkVehicle(brand, color, model);
+                    break;
+                case 3:
+                    parking3.parkVehicle(brand, color, model);
+                    break;
+                default:
+                    throw std::runtime_error("Invalid choice. Cannot park vehicle.");
+                    break;
+                }
+            }
+            else if (addOrRemoveChoice == 'R' || addOrRemoveChoice == 'r')
+            {
+                // Ask if the user wants to remove a vehicle
+                char removeChoice;
+                std::cout << "Do you want to remove a vehicle? (Y/N): ";
+                std::cin >> removeChoice;
+
+                if (removeChoice == 'Y' || removeChoice == 'y')
+                {
+                    parking1.removeVehicle();
+                    parking2.removeVehicle();
+                    parking3.removeVehicle();
+                }
+            }
+            else
+            {
+                throw std::runtime_error("Invalid choice. Please enter 'A' or 'R'.");
             }
         }
-        else if (addOrRemoveChoice == 'R' || addOrRemoveChoice == 'r')
+        catch (const std::exception& e)
         {
-            // Ask if the user wants to remove a vehicle
-            char removeChoice;
-            std::cout << "Do you want to remove a vehicle? (Y/N): ";
-            std::cin >> removeChoice;
-
-            if (removeChoice == 'Y' || removeChoice == 'y')
-            {
-                parking1.removeVehicle();
-                parking2.removeVehicle();
-                parking3.removeVehicle();
-            }
+            std::cout << "Error: " << e.what() << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
 
         // Display the status of parking storage objects
@@ -224,9 +251,23 @@ int main()
         std::cout << "Do you want to add or remove another vehicle? (A/R/N): ";
         std::cin >> continueChoice;
 
-        if (continueChoice == 'N' || continueChoice == 'n')
+        try
         {
-            break;
+            if (std::cin.fail())
+            {
+                throw std::runtime_error("Invalid input. Please enter 'A', 'R', or 'N'.");
+            }
+
+            if (continueChoice == 'N' || continueChoice == 'n')
+            {
+                break;
+            }
+        }
+        catch (const std::exception& e)
+        {
+            std::cout << "Error: " << e.what() << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
 
     } while (true);
